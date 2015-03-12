@@ -87,3 +87,25 @@ body {
     border-bottom: 0;
   }
 }
+
+#sign-in-submit{
+  text-align: center;
+}
+
+#sign-up-form {
+  width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0px;
+  text-align:left;
+}
+label {
+  width: 200px;
+  margin-top: 10px;
+  text-align: right;
+}
+
+input {
+  width: 200px;
+  border: 1px solid #000;
+}
