@@ -33,52 +33,14 @@
         <h3 class="text-muted">ProjectManagementApp</h3>
       </div>
 
-      <div class="jumbotron">
-        <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Always a pleasure scaffolding your apps.</p>
-        <p><a id="sign-up" class="btn btn-lg btn-success" href="#">Sign Up</span></a>
-        <div id="form-slide">
-          <form id='sign-up-form'>
-            <fieldset>
-              <div class="form-group">
-                <label for="username">Username: </label>
-                <input name="username"  autofocus='true' />
-              </div>
-              <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" name="email" />
-                </label>
-              </div>
-              <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" name="password" />
-              </div>
-              <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" name="title" />
-              </div>
-              <button id="sign-in-submit" type='submit'>Sign In</button>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>HTML5 Boilerplate</h4>
-          <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
+      <section class="jumbotron">
+        <h1>Project Management</h1>
+        <p><button id="sign-up" class="btn btn-lg btn-success">Sign Up</button></p>
+      </section>
 
-
-
-          <h4>Bootstrap</h4>
-          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-
-
-        </div>
-      </div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
+      <section id="container"></section>
+        <div class="animation"></div>
+      </section>
 
     </div>
 
@@ -119,6 +81,9 @@
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
+        <script src="scripts/users.js"></script>
+        <script src="scripts/projects.js"></script>
+        <script src="scripts/tasks.js"></script>
         <!-- endbuild -->
 </body>
 </html>
