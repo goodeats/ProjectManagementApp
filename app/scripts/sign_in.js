@@ -6,7 +6,11 @@ var UserApp = (function() {
   var run = function() {
     authToken = localStorage.getItem('authToken');
 
+<<<<<<< HEAD
     apiHost = 'http://local:3000';
+=======
+    apiHost = 'http://localhost:3000';
+>>>>>>> 29edbe845358ec840900041a16cdd4d2559842c6
     setupAjaxRequests();
 
     $('#loadPosts').on('click', loadPosts);
@@ -15,6 +19,10 @@ var UserApp = (function() {
   };
 
   var submitRegistration = function(event) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 29edbe845358ec840900041a16cdd4d2559842c6
     event.preventDefault();
 
     $.ajax({
@@ -22,9 +30,18 @@ var UserApp = (function() {
       type: 'POST',
       data: {user: {username: $('#username').val(), title: $('#title').val(),email: $('#email').val(), password: $('#password').val()}},
     })
+<<<<<<< HEAD
     .done(loginSuccess)
     .fail(function(err) {
       console.log(err);
+=======
+    // .done(loginSuccess)
+    .done(function(data) {
+      console.log(data);
+    })
+    .fail(function(error) {
+      console.log(error);
+>>>>>>> 29edbe845358ec840900041a16cdd4d2559842c6
     });
 
     return false;
@@ -84,6 +101,10 @@ var UserApp = (function() {
   return {run: run};
 })();
 
+<<<<<<< HEAD
 $(document).ready(function( {
+=======
+$(document).ready(function(){
+>>>>>>> 29edbe845358ec840900041a16cdd4d2559842c6
   UserApp.run();
 });
