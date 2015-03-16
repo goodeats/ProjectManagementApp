@@ -30,5 +30,5 @@ var taskRouter = new TaskRouter();
 // });
 
 $(document).ready(function(){
-  console.log('\'allo!');
+  console.log('\'allo from the tasks js!');
 });

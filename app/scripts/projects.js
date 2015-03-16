@@ -36,5 +36,5 @@ var ProjectRouter = Backbone.Router.extend({
 var projectRouter = new ProjectRouter();
 
 $(document).ready(function(){
-  console.log('\'allo!');
+  console.log('\'allo from the projects js!');
 });

@@ -9,62 +9,74 @@ var trace = function(){
   }
 };
 
-var UserRouter = Backbone.Router.extend({
+var Router = Backbone.Router.extend({
   routes: {
     'users': 'users',  //http://localhost:9000/#/users
-    'users/:id': 'user',  //http://localhost:9000/#/users/1
-    // 'users/:id': 'userUpdate'  //http://localhost:9000/#/users/1
+    'users/:id': 'user'  //http://localhost:9000/#/users/1
   },
 
-  // users: function(id){
-  //   console.log('hello from the users view');
-  //   $('#container').empty();
-  //   //index
-  // },
-
-  user: function(id){
-    console.log('hello from the user view!');
+  users: function(){
+    trace('hello from the user backbone!');
     $('#container').empty();
     $.ajax({
-      url: 'http://localhost:9000/users' + id,
+      url: 'http://localhost:3000/users', // add id after this works
       type: 'GET'
     }).done(function(response){
-      var template = Handlebars.compile($('#showUserTemplate').html());
+      var template = Handlebars.compile($('#submissionTemplate').html());
       $('#container').html(template({
-        submission: response
+        users: response.users
       }));
-    }).fail(function(jqXHR, textStatus, errorThrown){
-      trace(jqXHR, textStatus, errorThrown);
-    }).always(function(response){
-      trace(response);
-    });
-  },
-
-  userUpdate: function(id){
-    console.log('hello from the user view!');
-    $('#container').empty();
-    $.ajax({
-      url: 'http://localhost:9000/users' + id,
-      type: 'PATCH'
-    }).done(function(response){
-      var template = Handlebars.compile($('#updateUserTemplate').html());
-      $('#container').html(template({
-        submission: response
-      }));
+      trace('in the users ajax');
     }).fail(function(jqXHR, textStatus, errorThrown){
       trace(jqXHR, textStatus, errorThrown);
     }).always(function(response){
       trace(response);
     });
   }
-
 });
 
 
-var userRouter = new UserRouter();
+var renderUser = function(users){
+  trace('render the yooser');
+  var html = '';
+  for(var i = 0; i < users.length; i++){
+    html += '<div class="users" id="user-' + users[i].id + '">';
+    html += '<article>';
+    html += '<h2>' + users[i].username + '</h2>';
+    html += '<img src="' + users[i].avatar + '" alt="avatar" style="width:100px;height:100px">';
+    html += '<p>' + users[i].title + '</p>';
+    html += '<p>' + users[i].email + '</p>';
+    html += '</article></div>';
 
-(document).ajaxStart(function(e){
-  trace(e, "starting an ajax request");
+  }
+  $('#container').append(html);
+};
+
+var showUser = function(){
+  console.log('showing all yoosers now');
+  $('.jumbotron').hide();
+  $('#container').empty();
+
+  $.ajax({
+    url: 'http://localhost:3000/users', // add id for 'show' after this works
+    type: 'GET'
+  }).done(function(response){
+    renderUser(response.users);
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
+
+
+
+
+var router = new Router();
+// Backbone.history.start();
+
+$(document).ajaxStart(function(e){
+  trace(e, 'starting an ajax request');
   $('section#ajax-preloader').fadeIn();
   $('section#container').fadeOut();
 });
@@ -76,5 +88,8 @@ $(document).ajaxComplete(function(event, xhr, settings) {
 });
 
 $(document).ready(function(){
-  console.log('howdy from the users page!');
+  console.log('\'allo from the users js!');
+  $('#userlink').click(function() {
+    showUser();
+  });
 });

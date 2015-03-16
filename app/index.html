@@ -22,15 +22,15 @@
     <![endif]-->
 
 
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Groups</a></li>
-          <li><a href="#">User Profile</a></li>
-          <li><a href="#">Sign Out</a></li>
+    <div class='container'>
+      <div class='header'>
+        <ul class='nav nav-pills pull-right'>
+          <li class='active'><a href='#'>Home</a></li>
+          <li><a href='#'>Projects</a></li>
+          <li><a id='userlink' href='#'>User Profile</a></li>
+          <li><a href='#'>Sign Out</a></li>
         </ul>
-        <h3 class="text-muted">ProjectManagementApp</h3>
+        <h3 class='text-muted'>ProjectManagementApp</h3>
       </div>
 
       <section class="jumbotron">
@@ -108,7 +108,22 @@
         <script src="scripts/users.js"></script>
         <script src="scripts/projects.js"></script>
         <script src="scripts/tasks.js"></script>
-        <script src="js/sign_in.js"></script>
+        <script src="scripts/sign_in.js"></script>
         <!-- endbuild -->
+
+        <!-- build handlebars template for the home page, which populates with all of the submisstions from the api -->
+        <script type="text/x-handlebars-template" id="userTemplate">
+          {{#each users}}
+            <div class="users">
+              <h2><a href="{{url}}" target="_blank">{{users.name}}</a></h2>
+              <ul>
+                <li>Submitted by: {{user.name}}</li>
+                <li>Created on: {{created_at}}</li>
+                <li>Number of Comments: {{comments.length}}</li>
+                <li><a href="/#/submissions/{{id}}">View this submission</a></li>
+              </ul>
+            </div>
+          {{/each}}
+        </script>
 </body>
 </html>
