@@ -9,33 +9,6 @@ var trace = function(){
   }
 };
 
-var Router = Backbone.Router.extend({
-  routes: {
-    'users': 'users',  //http://localhost:9000/#/users
-    'users/:id': 'user'  //http://localhost:9000/#/users/1
-  },
-
-  users: function(){
-    trace('hello from the user backbone!');
-    $('#container').empty();
-    $.ajax({
-      url: 'http://localhost:3000/users', // add id after this works
-      type: 'GET'
-    }).done(function(response){
-      var template = Handlebars.compile($('#submissionTemplate').html());
-      $('#container').html(template({
-        users: response.users
-      }));
-      trace('in the users ajax');
-    }).fail(function(jqXHR, textStatus, errorThrown){
-      trace(jqXHR, textStatus, errorThrown);
-    }).always(function(response){
-      trace(response);
-    });
-  }
-});
-
-
 var renderUser = function(users){
   trace('render the yooser');
   var html = '';
@@ -72,7 +45,7 @@ var showUser = function(){
 
 
 
-var router = new Router();
+// var router = new Router();
 // Backbone.history.start();
 
 $(document).ajaxStart(function(e){
