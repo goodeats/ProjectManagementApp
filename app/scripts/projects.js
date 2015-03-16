@@ -60,17 +60,17 @@ var showProject = function(){
   });
 };
 
-// (document).ajaxStart(function(e){
-//   trace(e, "starting an ajax request");
-//   $('section#ajax-preloader').fadeIn();
-//   $('section#container').fadeOut();
-// });
+$(document).ajaxStart(function(e){
+  trace(e, "starting an ajax request");
+  $('section#ajax-preloader').fadeIn();
+  $('section#container').fadeOut();
+});
 
-// $(document).ajaxComplete(function(event, xhr, settings) {
-//   /* executes whenever an AJAX request completes */
-//   $('section#ajax-preloader').fadeOut();
-//   $('section#container').fadeIn();
-// });
+$(document).ajaxComplete(function(event, xhr, settings) {
+  /* executes whenever an AJAX request completes */
+  $('section#ajax-preloader').fadeOut();
+  $('section#container').fadeIn();
+});
 
 var projectRouter = new ProjectRouter();
 
