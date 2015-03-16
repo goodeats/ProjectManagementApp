@@ -1,5 +1,5 @@
 'use strict';
-
+//the comments from the merge conflicts are removed.
 var UserApp = (function() {
   var authToken, apiHost;
 
@@ -7,6 +7,10 @@ var UserApp = (function() {
     authToken = localStorage.getItem('authToken');
 
     apiHost = 'http://localhost:3000';
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9bd9359833efc81337426f43e8d18780b415768
     setupAjaxRequests();
 
     $('#loadPosts').on('click', loadPosts);
@@ -15,6 +19,7 @@ var UserApp = (function() {
   };
 
   var submitRegistration = function(event) {
+
     event.preventDefault();
 
     $.ajax({
