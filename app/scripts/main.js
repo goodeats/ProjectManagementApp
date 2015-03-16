@@ -39,7 +39,7 @@ Backbone.history.start();
 // });
 
 $(document).ready(function(){
-  console.log('\'allo!');
+  console.log('\'allo from the main js!');
   $( "div#form-slide" ).hide();
   $( 'button#sign-up' ).click(function () {
     if ( $( "div#form-slide" ).is( ":hidden" ) ) {
