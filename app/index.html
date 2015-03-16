@@ -112,15 +112,15 @@
         <!-- endbuild -->
 
         <!-- build handlebars template for the home page, which populates with all of the submisstions from the api -->
-        <script type="text/x-handlebars-template" id="userTemplate">
+        <script type="text/x-handlebars-template" id="usersTemplate">
           {{#each users}}
             <div class="users">
-              <h2><a href="{{url}}" target="_blank">{{users.name}}</a></h2>
+              {{debug}}
+              <h2><a href="{{username}}" target="_blank">{{username}}</a></h2>
               <ul>
-                <li>Submitted by: {{user.name}}</li>
-                <li>Created on: {{created_at}}</li>
-                <li>Number of Comments: {{comments.length}}</li>
-                <li><a href="/#/submissions/{{id}}">View this submission</a></li>
+                <li>{{title}}</li>
+                <li>{{email}}</li>
+                <li><a href="/#/users/{{id}}">View this user</a></li>
               </ul>
             </div>
           {{/each}}
