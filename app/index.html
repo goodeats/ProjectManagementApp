@@ -142,7 +142,7 @@
 
         <script type="text/x-handlebars-template" id="projectsTemplate">
           {{#each projects}}
-            <div class="projects" id="project-{{id}}">
+            <div class="project" >
               <h2><a href="#/projects/{{id}}" >{{name}}</a></h2>
               <ul>
                 <li>{{description}}</li>
@@ -153,6 +153,19 @@
           {{/each}}
         </script>
 
+        <script type="text/x-handlebars-template" id="projectTemplate">
+          <div class="project">
+            <h2>{{project.name}}</h2>
+            <ul>
+              <li>{{project.description}}</li>
+              <li>{{project.due_date}}</li>
+              <li><a href="/#/projects/{{id}}">You are viewing this project</a></li>
+            </ul>
+            {{#each project.tasks}}
+              <p>{{name}} - assigned to: {{user.username}}</p>
+            {{/each}}
+          </div>
+        </script>
 
 </body>
 </html>
