@@ -22,7 +22,27 @@ App.projectsRouter = function(){
     $('#container').html(template({
       projects: response.projects
     }));
-    $('.projects').hide();
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
+
+App.projectRouter = function(){
+  trace('hello from the project backbone!');
+  $('#container').empty();
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var projectId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/projects/' + projectId,
+    type: 'GET'
+  }).done(function(response){
+    var template = Handlebars.compile($('#projectTemplate').html());
+    $('#container').html(template({
+      project: response.project
+    }));
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
@@ -47,11 +67,14 @@ App.projectsRouter = function(){
 
 $(document).ready(function(){
   console.log('\'allo from the projects js!');
+  $('#container').hide();
 
   App.projectsRouter();
+  App.projectRouter();
+
   $('#projectslink').click(function() {
     $('.jumbotron').hide();
-    $('.projects').show();
+    $('#container').show();
   });
 
 });

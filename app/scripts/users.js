@@ -22,7 +22,6 @@ App.usersRouter = function(){
     $('#container').html(template({
       users: response.users
     }));
-    $('.user').hide();
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
@@ -44,7 +43,6 @@ App.userRouter = function(){
     $('#container').html(template({
       user: response.user
     }));
-    // $('.user').hide();
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
@@ -66,14 +64,11 @@ App.userRouter = function(){
 
 $(document).ready(function(){
   console.log('\'allo from the users js!');
+  $('.user').hide();
 
   App.usersRouter();
-  $('#userlink').click(function() {
-    $('.jumbotron').hide();
-    $('.user').show();
-  });
-
   App.userRouter();
+
   $('#userlink').click(function() {
     $('.jumbotron').hide();
     $('.user').show();
