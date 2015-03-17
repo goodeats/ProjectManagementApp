@@ -3,58 +3,80 @@
 /*global Backbone:true */
 'use strict';
 
-// var renderUser = function(users){
-//   trace('render the yooser');
-//   var html = '';
-//   for(var i = 0; i < users.length; i++){
-//     html += '<div class="users" id="user-' + users[i].id + '">';
-//     html += '<article>';
-//     html += '<h2>' + users[i].username + '</h2>';
-//     html += '<img src="' + users[i].avatar + '" alt="avatar" style="width:100px;height:100px">';
-//     html += '<p>' + users[i].title + '</p>';
-//     html += '<p>' + users[i].email + '</p>';
-//     html += '</article></div>';
+var trace = function(){
+  for(var i = 0; i < arguments.length; i++){
+    console.log(arguments[i]);
+  }
+};
 
-//   }
-//   $('#container').append(html);
-// };
+var App = App || {};
 
-// var showUser = function(){
-//   console.log('showing all yoosers now');
-//   $('.jumbotron').hide();
-//   $('#container').empty();
+App.usersRouter = function(){
+  trace('hello from the users backbone!');
+  $('#container').empty();
+  $.ajax({
+    url: App.url + '/users',
+    type: 'GET'
+  }).done(function(response){
+    var template = Handlebars.compile($('#usersTemplate').html());
+    $('#container').html(template({
+      users: response.users
+    }));
+    $('.user').hide();
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
 
-//   $.ajax({
-//     url: 'http://localhost:3000/users', // add id for 'show' after this works
-//     type: 'GET'
-//   }).done(function(response){
-//     renderUser(response.users);
-//   }).fail(function(jqXHR, textStatus, errorThrown){
-//     trace(jqXHR, textStatus, errorThrown);
-//   }).always(function(response){
-//     trace(response);
-//   });
-// };
+App.userRouter = function(id){
+  trace('hello from the user backbone!');
+  $('#container').empty();
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var userId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/users/' + userId,
+    type: 'GET'
+  }).done(function(response){
+    var template = Handlebars.compile($('#userTemplate').html());
+    $('#container').html(template({
+      user: response.user
+    }));
+    $('.user').hide();
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
 
+// $(document).ajaxStart(function(e){
+//   trace(e, 'starting an ajax request');
+//   $('section#ajax-preloader').fadeIn();
+//   $('section#container').fadeOut();
+// });
 
-
-
-// var router = new Router();
-// Backbone.history.start();
-
-$(document).ajaxStart(function(e){
-  trace(e, 'starting an ajax request');
-  $('section#ajax-preloader').fadeIn();
-  $('section#container').fadeOut();
-});
-
-$(document).ajaxComplete(function(event, xhr, settings) {
-  /* executes whenever an AJAX request completes */
-  $('section#ajax-preloader').fadeOut();
-  $('section#container').fadeIn();
-});
+// $(document).ajaxComplete(function(event, xhr, settings) {
+//   /* executes whenever an AJAX request completes */
+//   $('section#ajax-preloader').fadeOut();
+//   $('section#container').fadeIn();
+// });
 
 $(document).ready(function(){
   console.log('\'allo from the users js!');
+
+  App.usersRouter();
+  $('#userlink').click(function() {
+    $('.jumbotron').hide();
+    $('.user').show();
+  });
+
+  App.userRouter();
+  $('#userlink').click(function() {
+    $('.jumbotron').hide();
+    $('.user').show();
+  });
 
 });
