@@ -43,7 +43,7 @@ App.sendImageToRails = function(fileName){
   };
 
 App.avatarSuccess = function(response) {
-    debugger;
+    // debugger;
     // localStorage.setItem('authToken', userData.token);
     console.log('avatar changes!');
     // window.location.href = '/#/users/' + response.user.id;
