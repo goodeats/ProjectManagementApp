@@ -42,6 +42,9 @@ var Router = Backbone.Router.extend({
   projects: function(){
     App.projectsRouter();
   },
+  project: function(id){
+    App.projectRouter(id);
+  },
 
 });
 
