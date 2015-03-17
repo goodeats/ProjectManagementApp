@@ -1,6 +1,6 @@
 /*global $:true */
 /*global Handlebars:true */
-/*global Backbone:true */
+
 'use strict';
 
 var trace = function(){
