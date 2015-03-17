@@ -9,13 +9,12 @@ var UserApp = (function() {
     apiHost = 'http://localhost:3000';
     setupAjaxRequests();
 
-    $('#loadPosts').on('click', loadPosts);
-    $('#loginForm').on('submit', submitLogin);
-    $('#registrationForm').on('submit', submitRegistration);
+    $('#sign-in-form').on('submit', submitLogin);
+    $('#sign-up-form').on('submit', submitRegistration);
   };
 
   var submitRegistration = function(event) {
-
+    debugger;
     event.preventDefault();
 
     $.ajax({
@@ -23,7 +22,10 @@ var UserApp = (function() {
       type: 'POST',
       data: {user: {username: $('#username').val(), title: $('#title').val(),email: $('#email').val(), password: $('#password').val()}},
     })
-    .done(loginSuccess)
+    .done(function(results){
+      loginSuccess(results);
+      console.log(results);
+    })
     .fail(function(err) {
       console.log(err);
     });
@@ -34,10 +36,11 @@ var UserApp = (function() {
   var loginSuccess = function(userData) {
     localStorage.setItem('authToken', userData.token);
     console.log('logged in!');
-    window.location.href = '/';
+    window.location.href = '/#/users/' + userData.id;
   };
 
   var submitLogin = function(event) {
+    debugger;
     var $form;
     event.preventDefault();
     $form = $(this);
@@ -46,7 +49,10 @@ var UserApp = (function() {
       type: 'POST',
       data: $form.serialize()
     })
-    .done(loginSuccess)
+    .done(function(results){
+      loginSuccess(results);
+      console.log(results);
+    })
     .fail(function(err) {
       console.log(err);
     });
@@ -61,20 +67,6 @@ var UserApp = (function() {
     });
   };
 
-  var loadPosts = function() {
-    $.ajax({
-      url: apiHost + '/posts',
-      type: 'GET',
-      dataType: 'json',
-    })
-    .done(displayPosts)
-    .fail(acceptFailure);
-  };
-
-  var displayPosts = function(posts) {
-    console.table(posts);
-  };
-
   var acceptFailure = function(error) {
     if (error.status === 401) {
       console.log('SEND TO LOGIN SCREEN');
@@ -86,6 +78,6 @@ var UserApp = (function() {
 })();
 
 $(document).ready(function() {
-  console.log('\'allo from the sign in js!');
+  console.log('allo from the sign in js!');
   UserApp.run();
 });

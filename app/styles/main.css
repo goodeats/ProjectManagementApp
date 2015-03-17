@@ -99,6 +99,15 @@ body {
   padding: 0px;
   text-align:left;
 }
+
+#sign-in-form {
+  width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0px;
+  text-align:left;
+}
+
 label {
   width: 200px;
   margin-top: 10px;
