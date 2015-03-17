@@ -26,7 +26,7 @@
       <div class='header'>
         <ul class='nav nav-pills pull-right'>
           <li class='active'><a href='#'>Home</a></li>
-          <li><a id='projectlink' href='#/projects'>Projects</a></li>
+          <li><a id='projectslink' href='#/projects'>Projects</a></li>
           <li><a id='userlink' href='#/users'>User Profile</a></li>
           <li><a href='#'>Sign Out</a></li>
         </ul>
@@ -114,9 +114,8 @@
         <!-- build handlebars template for the home page, which populates with all of the submisstions from the api -->
         <script type="text/x-handlebars-template" id="usersTemplate">
           {{#each users}}
-            <div class="users">
-              {{debug}}
-              <h2><a href="{{username}}" target="_blank">{{username}}</a></h2>
+            <div class="user">
+              <h2><a href="/#/users/{{id}}" >{{username}}</a></h2>
               <ul>
                 <li>{{title}}</li>
                 <li>{{email}}</li>
@@ -125,5 +124,34 @@
             </div>
           {{/each}}
         </script>
+
+        <script type="text/x-handlebars-template" id="userTemplate">
+          <div class="user">
+            <h2>{{user.username}}</h2>
+            <ul>
+              <li>{{user.title}}</li>
+              <li>{{user.email}}</li>
+              <li><a href="/#/users/{{id}}">You are viewing this user</a></li>
+            </ul>
+            {{#each user.tasks}}
+              <p>{{name}} for: {{project}}</p>
+            {{/each}}
+          </div>
+        </script>
+
+        <script type="text/x-handlebars-template" id="projectsTemplate">
+          {{#each projects}}
+            <div class="projects" id="project-{{id}}">
+              <h2><a href="#/projects/{{id}}" >{{name}}</a></h2>
+              <ul>
+                <li>{{description}}</li>
+                <li>{{due_date}}</li>
+                <li><a href="/#/projects/{{id}}">View this project</a></li>
+              </ul>
+            </div>
+          {{/each}}
+        </script>
+
+
 </body>
 </html>
