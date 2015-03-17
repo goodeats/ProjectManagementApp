@@ -43,6 +43,15 @@ App.userRouter = function(){
     $('#container').html(template({
       user: response.user
     }));
+      $( 'button#avatar-change' ).click(function () {
+        console.log('i am clicking on the button');
+        if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
+          $( "div#avatar-form" ).slideDown( "slow" );
+          App.getAmazonKey();
+        } else {
+          $( "div#sign-in-form-slide" ).hide();
+        }
+      });
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
@@ -68,7 +77,6 @@ $(document).ready(function(){
 
   App.usersRouter();
   App.userRouter();
-
   $('#userlink').click(function() {
     $('.jumbotron').hide();
     $('.user').show();

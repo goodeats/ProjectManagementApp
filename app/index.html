@@ -125,6 +125,8 @@
         <script src="scripts/projects.js"></script>
         <script src="scripts/tasks.js"></script>
         <script src="scripts/sign_in.js"></script>
+        <script src="scripts/amazon.js"></script>
+
         <!-- endbuild -->
 
         <!-- build handlebars template for the home page, which populates with all of the submisstions from the api -->
@@ -144,7 +146,11 @@
         <script type="text/x-handlebars-template" id="userTemplate">
           <div class="user">
             <h2>{{user.username}}</h2>
-            <img src={{user.avatar}}>
+            <img src={{user.avatar}} height="150"><br>
+            <p><button id="avatar-change">Change my avatar</button></p>
+            <div id="avatar-form-slide">
+              <form id="avatar" action="https://s3.amazonaws.com/project-management-bucket" method="post" enctype="multipart/form-data"></form>
+            </div>
             <ul>
               <li>{{user.title}}</li>
               <li>{{user.email}}</li>
