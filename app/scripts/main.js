@@ -16,8 +16,7 @@ var trace = function(){
 // http://localhost:9000/projects/id
 // http://localhost:9000projects/id/tasks/id
 var App = App || {
-  url: 'http://localhost:3000',
-
+  url: 'http://localhost:3000'
 };
 
 var Router = Backbone.Router.extend({
@@ -25,7 +24,10 @@ var Router = Backbone.Router.extend({
     'home': 'home',  //http://localhost:9000/#/home,
     'users': 'users', // http://localhost:9000/users
     'users/:id': 'user',  //http://localhost:9000/#/users/1
-    'projects': 'projects'
+    'projects': 'projects', //http://localhost:9000/#/projects
+    'projects/:id': 'project',  //http://localhost:9000/#/projects/1
+    'tasks': 'tasks', //http://localhost:9000/#/tasks
+    'tasks/:id': 'task',  //http://localhost:9000/#/tasks/1
   },
 
   home: function(){
@@ -42,66 +44,6 @@ var Router = Backbone.Router.extend({
   },
 
 });
-
-App.usersRouter = function(){
-  trace('hello from the users backbone!');
-  $('#container').empty();
-  $.ajax({
-    url: App.url + '/users',
-    type: 'GET'
-  }).done(function(response){
-    var template = Handlebars.compile($('#usersTemplate').html());
-    $('#container').html(template({
-      users: response.users
-    }));
-    $('.user').hide();
-  }).fail(function(jqXHR, textStatus, errorThrown){
-    trace(jqXHR, textStatus, errorThrown);
-  }).always(function(response){
-    trace(response);
-  });
-};
-
-App.userRouter = function(id){
-  trace('hello from the user backbone!');
-  $('#container').empty();
-  var locate = window.location.hash;
-  var point = locate.lastIndexOf('/');
-  var userId = parseInt(locate.substring(point+1, locate.length));
-  $.ajax({
-    url: App.url + '/users/' + userId,
-    type: 'GET'
-  }).done(function(response){
-    var template = Handlebars.compile($('#userTemplate').html());
-    $('#container').html(template({
-      user: response.user
-    }));
-    // $('.user').hide();
-  }).fail(function(jqXHR, textStatus, errorThrown){
-    trace(jqXHR, textStatus, errorThrown);
-  }).always(function(response){
-    trace(response);
-  });
-};
-
-App.projectsRouter = function(){
-  trace('hello from the projects backbone!');
-  $('#container').empty();
-  $.ajax({
-    url: App.url + '/projects',
-    type: 'GET'
-  }).done(function(response){
-    var template = Handlebars.compile($('#projectsTemplate').html());
-    $('#container').html(template({
-      projects: response.projects
-    }));
-    $('.projects').hide();
-  }).fail(function(jqXHR, textStatus, errorThrown){
-    trace(jqXHR, textStatus, errorThrown);
-  }).always(function(response){
-    trace(response);
-  });
-};
 
 var router = new Router();
 Backbone.history.start();
@@ -130,22 +72,6 @@ $(document).ready(function(){
     }
   });
 
-  App.usersRouter();
-  $('#userlink').click(function() {
-    $('.jumbotron').hide();
-    $('.user').show();
-  });
 
-  App.userRouter();
-  $('#userlink').click(function() {
-    $('.jumbotron').hide();
-    $('.user').show();
-  });
-
-  App.projectsRouter();
-  $('#projectslink').click(function() {
-    $('.jumbotron').hide();
-    $('.projects').show();
-  });
 
 });
