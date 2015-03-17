@@ -38,6 +38,9 @@ var Router = Backbone.Router.extend({
   project: function(id){
     App.projectRouter(id);
   },
+  task: function(id){
+    App.taskRouter(id);
+  },
 
 });
 
