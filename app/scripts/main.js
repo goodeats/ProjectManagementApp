@@ -47,5 +47,7 @@ Backbone.history.start();
 
 $(document).ready(function(){
   trace('\'allo from the main js!');
+  $( "div#avatar-change" ).hide();
+
 
 });
