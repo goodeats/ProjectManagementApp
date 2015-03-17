@@ -7,7 +7,6 @@ var UserApp = (function() {
     authToken = localStorage.getItem('authToken');
 
     apiHost = 'http://localhost:3000';
-
     setupAjaxRequests();
 
     $('#loadPosts').on('click', loadPosts);
@@ -86,6 +85,7 @@ var UserApp = (function() {
   return {run: run};
 })();
 
-$(document).ready(function(){
+$(document).ready(function() {
+  console.log('\'allo from the sign in js!');
   UserApp.run();
 });
