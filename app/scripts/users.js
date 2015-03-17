@@ -44,7 +44,7 @@ App.userRouter = function(id){
     $('#container').html(template({
       user: response.user
     }));
-    $('.user').hide();
+    // $('.user').hide();
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
