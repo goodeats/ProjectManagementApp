@@ -67,15 +67,11 @@ $(document).ready(function(){
   $('.user').hide();
 
   App.usersRouter();
+  App.userRouter();
+
   $('#userlink').click(function() {
     $('.jumbotron').hide();
     $('.user').show();
   });
-
-  App.userRouter();
-  // $('#userlink').click(function() {
-  //   $('.jumbotron').hide();
-  //   $('.user').show();
-  // });
 
 });

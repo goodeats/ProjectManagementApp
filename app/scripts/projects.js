@@ -67,13 +67,14 @@ App.projectRouter = function(){
 
 $(document).ready(function(){
   console.log('\'allo from the projects js!');
-  $('.project').hide();
+  $('#container').hide();
 
   App.projectsRouter();
   App.projectRouter();
+
   $('#projectslink').click(function() {
     $('.jumbotron').hide();
-    $('.project').show();
+    $('#container').show();
   });
-  // test
+
 });
