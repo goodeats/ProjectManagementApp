@@ -82,13 +82,6 @@ $( 'button#sign-in' ).click(function () {
 
 $(document).ready(function(){
   console.log('\'allo from the main js!');
-  // $( "div#form-slide" ).hide();
-  // $( 'button#sign-up' ).click(function () {
-  //   if ( $( "div#form-slide" ).is( ":hidden" ) ) {
-  //     $( "div#form-slide" ).slideDown( "slow" );
-  //   } else {
-  //     $( "div#form-slide" ).hide();
-  //   }
   $( "div#form-slide" ).hide();
   $( "div#sign-in-form-slide").hide();
   SignUp();
