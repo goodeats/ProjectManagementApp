@@ -16,6 +16,7 @@ var Router = Backbone.Router.extend({
   },
 
   users: function(){
+    event.preventDefault();
     trace('hello from the user backbone!');
     $('#container').empty();
     $.ajax({
@@ -35,8 +36,8 @@ var Router = Backbone.Router.extend({
   }
 });
 
-
 var renderUser = function(users){
+  event.preventDefault();
   trace('render the yooser');
   var html = '';
   for(var i = 0; i < users.length; i++){
@@ -53,6 +54,7 @@ var renderUser = function(users){
 };
 
 var showUser = function(){
+  event.preventDefault();
   console.log('showing all yoosers now');
   $('.jumbotron').hide();
   $('#container').empty();
