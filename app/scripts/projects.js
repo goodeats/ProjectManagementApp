@@ -75,5 +75,5 @@ $(document).ready(function(){
     $('.jumbotron').hide();
     $('.project').show();
   });
-
+  // test
 });
