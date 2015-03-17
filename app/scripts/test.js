@@ -11,7 +11,7 @@ App.getAmazonKey = function(){
   var apiURL = 'http://localhost:3000'
 
   $.ajax({
-    url: apiURL + '/amazon/sign_key'
+    url: apiURL + '/amazon/sign_key/amazon/sign_key/image%2Fjpeg'
   }).done(function(data){
     myAws = data;
     App.buildFormData(data);
