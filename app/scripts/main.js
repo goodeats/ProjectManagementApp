@@ -24,30 +24,78 @@ var Router = Backbone.Router.extend({
   routes: {
     'home': 'home',  //http://localhost:9000/#/home,
     'users': 'users', // http://localhost:9000/users
-    'users/:id': 'user'  //http://localhost:9000/#/users/1
+    'users/:id': 'user',  //http://localhost:9000/#/users/1
+    'projects': 'projects'
   },
 
   home: function(){
     $('#container').empty();
   },
   users: function(){
-    App.users();
-  }
+    App.usersRouter();
+  },
+  user: function(id){
+    App.userRouter(id);
+  },
+  projects: function(){
+    App.projectsRouter();
+  },
 
 });
 
 App.usersRouter = function(){
-  trace('hello from the user backbone!');
+  trace('hello from the users backbone!');
   $('#container').empty();
   $.ajax({
-    url: App.url + '/users', // add id after this works
+    url: App.url + '/users',
     type: 'GET'
   }).done(function(response){
     var template = Handlebars.compile($('#usersTemplate').html());
     $('#container').html(template({
       users: response.users
     }));
-    trace('in the users ajax');
+    $('.user').hide();
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
+
+App.userRouter = function(id){
+  trace('hello from the user backbone!');
+  $('#container').empty();
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var userId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/users/' + userId,
+    type: 'GET'
+  }).done(function(response){
+    var template = Handlebars.compile($('#userTemplate').html());
+    $('#container').html(template({
+      user: response.user
+    }));
+    // $('.user').hide();
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  }).always(function(response){
+    trace(response);
+  });
+};
+
+App.projectsRouter = function(){
+  trace('hello from the projects backbone!');
+  $('#container').empty();
+  $.ajax({
+    url: App.url + '/projects',
+    type: 'GET'
+  }).done(function(response){
+    var template = Handlebars.compile($('#projectsTemplate').html());
+    $('#container').html(template({
+      projects: response.projects
+    }));
+    $('.projects').hide();
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   }).always(function(response){
@@ -58,7 +106,7 @@ App.usersRouter = function(){
 var router = new Router();
 Backbone.history.start();
 
-// (document).ajaxStart(function(e){
+// $(document).ajaxStart(function(e){
 //   trace(e, 'starting an ajax request');
 //   $('section#ajax-preloader').fadeIn();
 //   $('section#container').fadeOut();
@@ -83,5 +131,21 @@ $(document).ready(function(){
   });
 
   App.usersRouter();
-  $('div.users').hide();
+  $('#userlink').click(function() {
+    $('.jumbotron').hide();
+    $('.user').show();
+  });
+
+  App.userRouter();
+  $('#userlink').click(function() {
+    $('.jumbotron').hide();
+    $('.user').show();
+  });
+
+  App.projectsRouter();
+  $('#projectslink').click(function() {
+    $('.jumbotron').hide();
+    $('.projects').show();
+  });
+
 });
