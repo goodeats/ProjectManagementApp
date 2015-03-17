@@ -1,6 +1,6 @@
 /*global $:true */
 /*global Handlebars:true */
-/*global Backbone:true */
+
 'use strict';
 
 var trace = function(){
@@ -30,7 +30,7 @@ App.usersRouter = function(){
   });
 };
 
-App.userRouter = function(id){
+App.userRouter = function(){
   trace('hello from the user backbone!');
   $('#container').empty();
   var locate = window.location.hash;
