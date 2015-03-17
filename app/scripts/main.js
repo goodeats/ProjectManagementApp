@@ -60,10 +60,7 @@ Backbone.history.start();
 //   $('section#container').fadeIn();
 // });
 
-$(document).ready(function(){
-  console.log('\'allo from the main js!');
-
-  $( 'div#form-slide' ).hide();
+var SignUp = function(){
   $( 'button#sign-up' ).click(function () {
     if ( $( 'div#form-slide' ).is( ':hidden' ) ) {
       $( 'div#form-slide' ).slideDown( 'slow' );
@@ -71,7 +68,22 @@ $(document).ready(function(){
       $( 'div#form-slide' ).hide();
     }
   });
+};
 
+var SignIn = function(){
+$( 'button#sign-in' ).click(function () {
+    if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
+      $( "div#sign-in-form-slide" ).slideDown( "slow" );
+    } else {
+      $( "div#sign-in-form-slide" ).hide();
+    }
+  });
+};
 
-
+$(document).ready(function(){
+  console.log('\'allo from the main js!');
+  $( "div#form-slide" ).hide();
+  $( "div#sign-in-form-slide").hide();
+  SignUp();
+  SignIn();
 });
