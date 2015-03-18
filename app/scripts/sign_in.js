@@ -9,7 +9,8 @@ var UserApp = (function() {
 
   var run = function() {
     authToken = localStorage.getItem('authToken');
-    apiHost = 'http://localhost:3000';
+    // apiHost = 'http://localhost:3000';
+    apiHost = 'https://project-management-api.herokuapp.com';
     setupAjaxRequests();
 
     $('#sign-in-form').on('submit', submitLogin);

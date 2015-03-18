@@ -9,7 +9,8 @@ var trace = function(){
 };
 
 var App = App || {
-  url: 'http://localhost:3000'
+  // url: 'http://localhost:3000'
+  url: 'https://project-management-api.herokuapp.com'
 };
 var NewProject = NewProject || {};
 
