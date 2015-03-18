@@ -169,7 +169,6 @@ NewProject.processForm = function(e,form,router){
 };
 
 NewProject.postParams = function(name, description, date, privacy, router){
-  debugger
   $.ajax({
     url: App.url + '/projects',
     type: 'POST',
