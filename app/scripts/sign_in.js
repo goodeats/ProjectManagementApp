@@ -1,11 +1,14 @@
+/*global $:true */
+/*global Handlebars:true */
 'use strict';
-//the comments from the merge conflicts are removed.
+
+var authToken;
+
 var UserApp = (function() {
-  var authToken, apiHost;
+  var apiHost;
 
   var run = function() {
     authToken = localStorage.getItem('authToken');
-
     apiHost = 'http://localhost:3000';
     setupAjaxRequests();
 
@@ -14,7 +17,6 @@ var UserApp = (function() {
   };
 
   var submitRegistration = function(event) {
-    debugger;
     event.preventDefault();
 
     $.ajax({
@@ -35,6 +37,8 @@ var UserApp = (function() {
 
   var loginSuccess = function(userData) {
     localStorage.setItem('authToken', userData.token);
+    localStorage.setItem('currentUser', userData.id);
+    debugger;
     console.log('logged in!');
     window.location.href = '/#/users/' + userData.id;
   };
@@ -97,6 +101,14 @@ $( 'button#sign-in' ).click(function () {
   });
 };
 
+var SignOut = function(event){
+    event.preventDefault();
+    localStorage.removeItem('authToken');
+    authToken = undefined;
+    console.log('User has been signed out');
+    location.reload();
+  };
+
 $(document).ready(function() {
   console.log('allo from the sign in js!');
   UserApp.run();
@@ -104,4 +116,5 @@ $(document).ready(function() {
   $( "div#sign-in-form-slide").hide();
   SignUp();
   SignIn();
+  SignOut();
 });
