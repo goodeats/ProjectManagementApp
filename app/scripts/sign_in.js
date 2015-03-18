@@ -14,6 +14,7 @@ var UserApp = (function() {
 
     $('#sign-in-form').on('submit', submitLogin);
     $('#sign-up-form').on('submit', submitRegistration);
+    $('#signout').on('click', signOut);
   };
 
   var submitRegistration = function(event) {
@@ -75,6 +76,15 @@ var UserApp = (function() {
     }
   };
 
+  var signOut = function(event){
+    event.preventDefault();
+    localStorage.removeItem('authToken');
+    authToken = undefined;
+    console.log('User has been signed out');
+    location.reload();
+    window.location.href = '/';
+  };
+
   return {run: run};
 })();
 
@@ -98,14 +108,6 @@ $( 'button#sign-in' ).click(function () {
   });
 };
 
-var SignOut = function(event){
-    event.preventDefault();
-    localStorage.removeItem('authToken');
-    authToken = undefined;
-    console.log('User has been signed out');
-    location.reload();
-  };
-
 $(document).ready(function() {
   console.log('allo from the sign in js!');
   UserApp.run();
@@ -113,5 +115,4 @@ $(document).ready(function() {
   $( "div#sign-in-form-slide").hide();
   SignUp();
   SignIn();
-  SignOut();
 });
