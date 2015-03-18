@@ -178,14 +178,26 @@
           <div class="project">
             <h2>{{project.name}}</h2>
             <ul>
-              <li>{{project.description}}</li>
-              <li>{{project.due_date}}</li>
-              <li>{{project.privacy}}</li>
-              <li><a href="/#/projects/{{id}}">You are viewing this project</a></li>
+              <li>Description: {{project.description}}</li>
+              <li>Due Date: {{project.due_date}}</li>
+              <li>Private? {{project.privacy}}</li>
             </ul>
             {{#each project.tasks}}
               <p><a href="/#/tasks/{{id}}">{{name}} - assigned to: {{user.username}}</a></p>
             {{/each}}
+            {{#each project.user}}
+              <p>{{username}} works here</p>
+            {{/each}}
+          </div>
+          <div class="project-buttons">
+            <a href="#/projects/{{id}}">Update this Project!</a>
+            <button type='button' id='delete-project'>Delete this Project!</button>
+          </div>
+        </script>
+
+        <script type="text/x-handlebars-template" id="updateProjectTemplate">
+          <div class="updateproject">
+          <p>yo</p>
           </div>
         </script>
 

@@ -12,7 +12,7 @@ var App = App || {
   // url: 'http://localhost:3000'
   url: 'https://project-management-api.herokuapp.com'
 };
-var NewProject = NewProject || {};
+var Project = Project || {};
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -22,6 +22,7 @@ var Router = Backbone.Router.extend({
     'projects': 'projects', //http://localhost:9000/#/projects
     'projects/:id': 'project',  //http://localhost:9000/#/projects/1
     'new-project': 'newProject',//http://localhost:9000/#/new-project
+    'update-project': 'updateProject',//http://localhost:9000/#/update-project
     'tasks': 'tasks', //http://localhost:9000/#/tasks
     'tasks/:id': 'task',  //http://localhost:9000/#/tasks/1
   },
@@ -118,6 +119,12 @@ var Router = Backbone.Router.extend({
       $('#container').html(template({
         project: response.project
       }));
+
+      $('#delete-project').on('click', function(){
+        App.deleteProject();
+        trace('hi delete button is active');
+      });
+
     }).fail(function(jqXHR, textStatus, errorThrown){
       trace(jqXHR, textStatus, errorThrown);
     }).always(function(response){
@@ -126,13 +133,41 @@ var Router = Backbone.Router.extend({
   },
 
   newProject: function(){
-    trace('hello from the new submissions view');
+    trace('hello from the new project backbone');
     $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
-      var $form = $('#new-project-form');
+      var $form = $('#project-form');
       $form.on('submit',function(event){
-        NewProject.processForm(event,$form,router);
+        Project.newProcessForm(event,$form,router);
       });
     });
+  },
+
+  updateProject: function(event){
+    trace('hello from the update project backbone');
+    if(event.preventDefault) event.preventDefault();
+    var locate = window.location.hash;
+    var point = locate.lastIndexOf('/');
+    var projectId = parseInt(locate.substring(point+1, locate.length));
+      $.ajax({
+        url: App.url + '/projects/' + projectId,
+        type: 'PATCH',
+        data: {
+          project: {
+            name: $('#proj-name').val(),
+            description: $('#proj-description').val(),
+            due_date: $('#proj-date').val(),
+            privacy: $('#proj-privacy').val()
+          }
+        }
+      }).done(function(response){
+        var template = Handlebars.compile($('#updateProjectTemplate').html());
+        $('#container').html(template({
+          project: response.project
+        }));
+      }).fail(function(jqXHR, textStatus, errorThrown){
+        trace(jqXHR, textStatus, errorThrown);
+      });
+      location.reload();
   },
 
   task: function(id){
@@ -159,16 +194,18 @@ var Router = Backbone.Router.extend({
 
 });
 
-NewProject.processForm = function(e,form,router){
+Project.newProcessForm = function(e,form,router){
+  trace('hello from the project new form');
   if(e.preventDefault) e.preventDefault();
   var name = $(form).find("input[name='proj-name']").val();
   var description = $(form).find("input[name='proj-description']").val();
   var date = $(form).find("input[name='proj-date']").val();
   var privacy = $(form).find("select[name='proj-privacy']").val();
-  NewProject.postParams(name, description, date, privacy, router);
+  var user = localStorage.getItem('currentUser');
+  Project.newPostParams(name, description, date, privacy, user, router);
 };
 
-NewProject.postParams = function(name, description, date, privacy, router){
+Project.newPostParams = function(name, description, date, privacy, user, router){
   $.ajax({
     url: App.url + '/projects',
     type: 'POST',
@@ -177,8 +214,9 @@ NewProject.postParams = function(name, description, date, privacy, router){
         name: name,
         description: description,
         due_date: date,
-        privacy: privacy
-      }
+        privacy: privacy,
+        // user: user
+      },
     },
     complete: function(jqXHR,textStatus){
       trace(jqXHR, textStatus, "complete post!!");
@@ -201,17 +239,80 @@ NewProject.postParams = function(name, description, date, privacy, router){
   });
 };
 
+// Project.updateProcessForm = function(e,form,projectId,router){
+//   trace('hello from the project update form');
+//   if(e.preventDefault) e.preventDefault();
+//   var name = $(form).find("input[name='proj-name']").val();
+//   var description = $(form).find("input[name='proj-description']").val();
+//   var date = $(form).find("input[name='proj-date']").val();
+//   var privacy = $(form).find("select[name='proj-privacy']").val();
+//   var user = localStorage.getItem('currentUser');
+//   Project.newPostParams(name, description, date, privacy, user, projectId, router);
+// };
+
+// Project.updatePostParams = function(name, description, date, privacy, user, projectId, router){
+//   $.ajax({
+//     url: App.url + '/projects/' + projectId,
+//     type: 'PATCH',
+//     data: {
+//       project: {
+//         name: name,
+//         description: description,
+//         due_date: date,
+//         privacy: privacy,
+//         // user: user
+//       },
+//     },
+//     complete: function(jqXHR,textStatus){
+//       trace(jqXHR, textStatus, "complete post!!");
+//     },
+//     success: function(data, textStatus, jqXHR){
+//       router.navigate("projects",{trigger: true});
+//       trace(data,textStatus, jqXHR, "successful post!!");
+//     },
+//     error: function(jqXHR,error,exception){
+//       trace(jqXHR,error,exception);
+//     },
+//   }).done(function(response){
+//     trace(response, "posted project!!");
+//   }).fail(function(jqXHR, textStatus, thrownError){
+//     trace(jqXHR, textStatus, thrownError);
+//     router.navigate("projects",{trigger: true});
+//     trace('wat');
+//   }).always(function(response){
+//     trace(response);
+//   });
+// };
 
 var router = new Router();
 Backbone.history.start();
+
+App.deleteProject = function(){
+  trace('hello from the delete project backbone');
+  $('#container').empty();
+  $('.jumbotron').hide();
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var projectId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/projects/' + projectId,
+    type: 'DELETE',
+  }).done(function(data){
+    trace(data);
+    trace('deleted project');
+    window.location.href = '/#/projects';
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(App.url + '/#/projects/' + projectId);
+    trace(jqXHR, textStatus, errorThrown);
+  });
+}
 
 
 $(document).ready(function(){
   trace('\'allo from the main js!');
   $( "div#avatar-change" ).hide();
 
-  $('#userlink').on('click', function(event){
 
-  });
+
 
 });
