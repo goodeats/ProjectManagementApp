@@ -173,7 +173,7 @@ NewProject.postParams = function(name, description, date, privacy, router){
     url: App.url + '/projects',
     type: 'POST',
     data: {
-      submission: {
+      project: {
         name: name,
         description: description,
         due_date: date,
