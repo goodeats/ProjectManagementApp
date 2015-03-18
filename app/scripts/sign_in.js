@@ -14,7 +14,6 @@ var UserApp = (function() {
   };
 
   var submitRegistration = function(event) {
-    debugger;
     event.preventDefault();
 
     $.ajax({
@@ -49,10 +48,7 @@ var UserApp = (function() {
       type: 'POST',
       data: $form.serialize()
     })
-    .done(function(results){
-      loginSuccess(results);
-      console.log(results);
-    })
+    .done(loginSuccess)
     .fail(function(err) {
       console.log(err);
     });

@@ -184,14 +184,22 @@
               <li><a href="/#/projects/{{id}}">You are viewing this project</a></li>
             </ul>
             {{#each project.tasks}}
-              <p>{{name}} - assigned to: {{user.username}}</p>
-              <li><a href="/#/tasks/{{id}}">View this project</a></li>
+              <p><a href="/#/tasks/{{id}}">{{name}} - assigned to: {{user.username}}</a></p>
             {{/each}}
           </div>
         </script>
+
+
+
         <script type="text/x-handlebars-template" id="taskTemplate">
           <div class="task">
             <h2>{{task.name}}</h2>
+            <ul>
+              <li>Due date: {{task.due_date}}</li>
+              <li>Status: {{task.status}}</li>
+              <li>Priority: {{task.priority}}</li>
+              <li>Order: {{task.order}}</li>
+            </ul>
           </div>
         </script>
 
