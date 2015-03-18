@@ -19,7 +19,6 @@ var UserApp = (function() {
 
   var submitRegistration = function(event) {
     event.preventDefault();
-
     $.ajax({
       url: apiHost + '/users',
       type: 'POST',
@@ -39,13 +38,34 @@ var UserApp = (function() {
   var loginSuccess = function(userData) {
     localStorage.setItem('authToken', userData.token);
     localStorage.setItem('currentUser', userData.id);
-    debugger;
-    console.log('logged in!');
-    window.location.href = '/users/' + userData.id;
+    // console.log('logged in!');
+    $.ajax({
+      url: App.url + '/users/' + userData.id,
+      type: 'GET'
+    }).done(function(response){
+      var template = Handlebars.compile($('#userTemplate').html());
+      $('#container').html(template({
+        user: response
+      }));
+      $( 'button#avatar-change' ).click(function () {
+        console.log('i am clicking on the button');
+        if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
+          $( "div#avatar-form" ).slideDown( "slow" );
+          App.getAmazonKey();
+        } else {
+          $( "div#sign-in-form-slide" ).hide();
+        }
+      });
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
+    // i think what you're trying to do here is make a GET request to your api for the user's information
+    window.location.href = '/#/users/' + userData.id;
   };
 
   var submitLogin = function(event) {
-    debugger;
     var $form;
     event.preventDefault();
     $form = $(this);
@@ -65,7 +85,7 @@ var UserApp = (function() {
   var setupAjaxRequests = function() {
     $.ajaxPrefilter(function ( options ) {
       options.headers = {};
-      options.headers['AUTHORIZATION'] = "Token token" + authToken;
+      options.headers['AUTHORIZATION'] = "Token token=" + localStorage.authToken;
     });
   };
 

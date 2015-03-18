@@ -26,23 +26,126 @@ var Router = Backbone.Router.extend({
   home: function(){
     $('#container').empty();
   },
+
   users: function(){
-    App.usersRouter();
+    trace('hello from the users backbone!');
+    $('#container').empty();
+    $('.jumbotron').hide();
+    $.ajax({
+      url: App.url + '/users',
+      type: 'GET'
+    }).done(function(response){
+      // $('.container').empty();
+
+      var template = Handlebars.compile($('#usersTemplate').html());
+      $('#container').html(template({
+        users: response.users
+      }));
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
   },
+
   user: function(id){
-    App.userRouter(id);
+    trace('hello from the user backbone!',id);
+    $('#container').empty();
+    $('.jumbotron').hide();
+
+    var locate = window.location.hash;
+    var point = locate.lastIndexOf('/');
+    var userId = parseInt(locate.substring(point+1, locate.length));
+    $.ajax({
+      url: App.url + '/users/' + userId,
+      type: 'GET'
+    }).done(function(response){
+      var template = Handlebars.compile($('#userTemplate').html());
+      $('#container').html(template({
+        user: response.user
+      }));
+      $( 'button#avatar-change' ).click(function () {
+        console.log('i am clicking on the button');
+        if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
+          $( "div#avatar-form" ).slideDown( "slow" );
+          App.getAmazonKey();
+        } else {
+          $( "div#sign-in-form-slide" ).hide();
+        }
+      });
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
   },
+
   projects: function(){
-    App.projectsRouter();
+    trace('hello from the projects backbone!');
+    $('#container').empty();
+    $('.jumbotron').hide();
+
+    $.ajax({
+      url: App.url + '/projects',
+      type: 'GET'
+    }).done(function(response){
+      var template = Handlebars.compile($('#projectsTemplate').html());
+      $('#container').html(template({
+        projects: response.projects
+      }));
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
   },
+
   project: function(id){
-    App.projectRouter(id);
+    trace('hello from the project backbone!');
+    $('#container').empty();
+    $('.jumbotron').hide();
+    var locate = window.location.hash;
+    var point = locate.lastIndexOf('/');
+    var projectId = parseInt(locate.substring(point+1, locate.length));
+    $.ajax({
+      url: App.url + '/projects/' + projectId,
+      type: 'GET'
+    }).done(function(response){
+      var template = Handlebars.compile($('#projectTemplate').html());
+      $('#container').html(template({
+        project: response.project
+      }));
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
   },
-  tasks: function(){
-    App.tasksRouter();
-  },
+
+  // tasks: function(){
+  //   App.tasksRouter();
+  // },
+
   task: function(id){
-    App.taskRouter(id);
+    trace('hello from the task backbone!');
+    $('#container').empty();
+    $('.jumbotron').hide();
+    var locate = window.location.hash;
+    var point = locate.lastIndexOf('/');
+    var taskId = parseInt(locate.substring(point+1, locate.length));
+    $.ajax({
+      url: App.url + '/tasks/' + taskId,
+      type: 'GET'
+    }).done(function(response){
+      var template = Handlebars.compile($('#taskTemplate').html());
+      $('#container').html(template({
+        task: response.task
+      }));
+    }).fail(function(jqXHR, textStatus, errorThrown){
+      trace(jqXHR, textStatus, errorThrown);
+    }).always(function(response){
+      trace(response);
+    });
   },
 
 });
@@ -55,5 +158,8 @@ $(document).ready(function(){
   trace('\'allo from the main js!');
   $( "div#avatar-change" ).hide();
 
+  $('#userlink').on('click', function(event){
+
+  });
 
 });
