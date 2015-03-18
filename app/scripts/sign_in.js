@@ -41,7 +41,7 @@ var UserApp = (function() {
     localStorage.setItem('currentUser', userData.id);
     debugger;
     console.log('logged in!');
-    window.location.href = '/#/users/' + userData.id;
+    window.location.href = '/users/' + userData.id;
   };
 
   var submitLogin = function(event) {
@@ -72,7 +72,7 @@ var UserApp = (function() {
   var acceptFailure = function(error) {
     if (error.status === 401) {
       console.log('SEND TO LOGIN SCREEN');
-      window.location.href = '/sign_in.html';
+      window.location.href = '/';
     }
   };
 

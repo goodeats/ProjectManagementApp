@@ -9,6 +9,13 @@ var trace = function(){
   }
 };
 
+var setupAjaxRequests = function() {
+    $.ajaxPrefilter(function ( options ) {
+      options.headers = {};
+      options.headers['AUTHORIZATION'] = "Token token" + authToken;
+    });
+  };
+
 var App = App || {};
 
 App.projectsRouter = function(){
