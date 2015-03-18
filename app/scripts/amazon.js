@@ -8,7 +8,8 @@ var fileName;
 
 App.getAmazonKey = function(){
   console.log('im in the getamazonkey function');
-  var apiURL = 'http://localhost:3000'
+  var apiURL = 'https://project-management-api.herokuapp.com'
+  // var apiURL = 'http://localhost:3000'
 
   $.ajax({
     url: apiURL + '/amazon/sign_key/image%2Fjpeg'
@@ -59,7 +60,8 @@ App.postImageToRails = function(fileName){
   // debugger;
   console.log("im inside the postimage to rails and my file name is " + fileName);
   $.ajax({
-    url: 'http://localhost:3000/users/' + userId,
+    // url: 'http://localhost:3000/users/' + userId,
+    url: 'https://project-management-api.herokuapp.com/users' + userId,
     type: 'PATCH',
     data: {
       user: {
