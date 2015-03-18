@@ -30,7 +30,7 @@
           <li><script>document.write('<a href="#/users/' + localStorage.getItem('currentUser') + '" >User Profile</a>')</script></li>
           <li><a id='signout' href='/'>Sign Out</a></li>
         </ul>
-        <h3 class='text-muted'>ProjectManagementApp</h3>
+        <h3 class='text-muted'>KickAss ProjectManagementApp</h3>
       </div>
 
       <section class="jumbotron">
@@ -160,6 +160,7 @@
         </script>
 
         <script type="text/x-handlebars-template" id="projectsTemplate">
+          <a href="#/new-project">Create a New Project!</a>
           {{#each projects}}
             <div class="project" >
               <h2><a href="#/projects/{{id}}" >{{name}}</a></h2>
