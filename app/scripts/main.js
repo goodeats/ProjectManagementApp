@@ -11,6 +11,7 @@ var trace = function(){
 var App = App || {
   url: 'http://localhost:3000'
 };
+var NewProject = NewProject || {};
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -19,6 +20,7 @@ var Router = Backbone.Router.extend({
     'users/:id': 'user',  //http://localhost:9000/#/users/1
     'projects': 'projects', //http://localhost:9000/#/projects
     'projects/:id': 'project',  //http://localhost:9000/#/projects/1
+    'new-project': 'newProject',//http://localhost:9000/#/new-project
     'tasks': 'tasks', //http://localhost:9000/#/tasks
     'tasks/:id': 'task',  //http://localhost:9000/#/tasks/1
   },
@@ -122,9 +124,15 @@ var Router = Backbone.Router.extend({
     });
   },
 
-  // tasks: function(){
-  //   App.tasksRouter();
-  // },
+  newProject: function(){
+    trace('hello from the new submissions view');
+    $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
+      var $form = $('#new-project-form');
+      $form.on('submit',function(event){
+        NewProject.processForm(event,$form,router);
+      });
+    });
+  },
 
   task: function(id){
     trace('hello from the task backbone!');
@@ -149,6 +157,49 @@ var Router = Backbone.Router.extend({
   },
 
 });
+
+NewProject.processForm = function(e,form,router){
+  if(e.preventDefault) e.preventDefault();
+  var name = $(form).find("input[name='proj-name']").val();
+  var description = $(form).find("input[name='proj-description']").val();
+  var date = $(form).find("input[name='proj-date']").val();
+  var privacy = $(form).find("select[name='proj-privacy']").val();
+  NewProject.postParams(name, description, date, privacy, router);
+};
+
+NewProject.postParams = function(name, description, date, privacy, router){
+  $.ajax({
+    url: App.url + '/projects',
+    type: 'POST',
+    data: {
+      submission: {
+        name: name,
+        description: description,
+        due_date: date,
+        privacy: privacy
+      }
+    },
+    complete: function(jqXHR,textStatus){
+      trace(jqXHR, textStatus, "complete post!!");
+    },
+    success: function(data, textStatus, jqXHR){
+      router.navigate("projects",{trigger: true});
+      trace(data,textStatus, jqXHR, "successful post!!");
+    },
+    error: function(jqXHR,error,exception){
+      trace(jqXHR,error,exception);
+    },
+  }).done(function(response){
+    trace(response, "posted project!!");
+  }).fail(function(jqXHR, textStatus, thrownError){
+    trace(jqXHR, textStatus, thrownError);
+    router.navigate("projects",{trigger: true});
+    trace('wat');
+  }).always(function(response){
+    trace(response);
+  });
+};
+
 
 var router = new Router();
 Backbone.history.start();
