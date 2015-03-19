@@ -414,7 +414,6 @@ Comment.newCommentParams = function(body, router){
   var point = locate.lastIndexOf('/');
   var taskId = parseInt(locate.substring(point+1, locate.length));
   var user = parseInt(localStorage.getItem('currentUser'));
-  debugger
   $.ajax({
     url: App.url + '/tasks/' + taskId + '/comments',
     type: 'POST',
