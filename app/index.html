@@ -182,17 +182,19 @@
 
         <script type="text/x-handlebars-template" id="projectTemplate">
           <button type='button' id='new-task'>Add a Task!</button>
-          <div class="project">
+          <div id="myProject" class="project">
             <h2>{{project.name}}</h2>
             <ul>
               <li>Description: {{project.description}}</li>
               <li>Due Date: {{project.due_date}}</li>
               <li>Private? {{project.privacy}}</li>
             </ul>
-            <h4>Completed tasks</h4>
+            <h4>Tasks</h4>
+            <ul>
             {{#each project.tasks}}
-              <p><a href="/#/tasks/{{id}}">{{name}}</a> - assigned to: {{user.username}} - Status: {{status}}</p>
+              <li><a href="/#/tasks/{{id}}">{{name}}</a> - assigned to: {{user.username}} - Status: {{status}}</li>
             {{/each}}
+            </ul>
             {{#each project.user}}
               <p>{{username}} works here</p>
             {{/each}}
@@ -202,14 +204,14 @@
             <button type='button' id='delete-project'>Delete this Project!</button>
             <button type='button' id='show-members'>Show Members!</button>
           </div>
+          <div id="membership2"><h4>Members:</h4></div>
         </script>
+
         <script type="text/x-handlebars-template" id="membershipTemplate">
           <div id="membership">
-          {{#each user}}
             <ul>
-            <li>{{username}}</li>
+              <li>{{username}}</li>
             </ul>
-          {{/each}}
           </div>
         </script>
 
