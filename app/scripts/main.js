@@ -122,7 +122,10 @@ var Router = Backbone.Router.extend({
       });
 
       $('#delete-project').on('click', function(){
-        App.deleteProject();
+        var result = confirm("Do you want to delete this project?");
+        if (result) {
+          App.deleteProject();
+        }
       });
 
       $('#show-members').on('click', function(){
@@ -168,8 +171,25 @@ var Router = Backbone.Router.extend({
         Comment.newComment();
       });
 
+      $('#update-task').on('click', function(){
+        Task.updateTask();
+        trace('hi update button is active');
+      });
+
       $('#show-comment').on('click', function(){
         Comment.showComments(taskId);
+      });
+
+      $('.delete-comment').on('click', function(){
+        Comment.deleteComment(taskId);
+        trace('hi show comment button is active <:o');
+      });
+
+      $('#delete-task').on('click', function(){
+        var result = confirm("Do you want to delete this task?");
+        if (result) {
+          Task.deleteTask();
+        }
       });
 
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -235,16 +255,16 @@ Task.newTask = function(){
 
 Task.newTaskForm = function(e,form,router){
   if(e.preventDefault) e.preventDefault();
-  debugger;
   var name = $(form).find("input[name='task-name']").val();
   var date = $(form).find("input[name='task-date']").val();
   var status = $(form).find("select[name='task-status']").val();
+  var priority = $(form).find("select[name='task-priority']").val();
   var order = $(form).find("input[name='task-order']").val();
   var privacy = $(form).find("select[name='task-privacy']").val();
-  Task.newTaskParams(name, date, status, order, privacy, router);
+  Task.newTaskParams(name, date, status, priority, order, privacy, router);
 };
 
-Task.newTaskParams = function(name, date, status, order, privacy, router){
+Task.newTaskParams = function(name, date, status, priority, order, privacy, router){
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var projectId = parseInt(locate.substring(point+1, locate.length));
@@ -256,6 +276,7 @@ Task.newTaskParams = function(name, date, status, order, privacy, router){
         name: name,
         due_date: date,
         status: status,
+        priority: priority,
         order: order,
         privacy: privacy
       },
@@ -281,51 +302,54 @@ Task.newTaskParams = function(name, date, status, order, privacy, router){
 };
 
 Task.updateTask = function(){
-    $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
-      var $form = $('#project-form');
-      $form.on('submit',function(event){
-        Project.updateProcessForm(event,$form);
-      });
+  $('#container').empty().load('partials/task-form.html',function(response,status,xhr){
+    var $form = $('#task-form');
+    $form.on('submit',function(event){
+      Task.updateTaskForm(event,$form);
     });
+  });
 };
 
-Task.updateProcessForm = function(e,form){
+Task.updateTaskForm = function(e,form){
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
-  var projectId = parseInt(locate.substring(point+1, locate.length));
+  var taskId = parseInt(locate.substring(point+1, locate.length));
   if(e.preventDefault) e.preventDefault();
-  var name = $(form).find("input[name='proj-name']").val();
-  var description = $(form).find("input[name='proj-description']").val();
-  var date = $(form).find("input[name='proj-date']").val();
-  var privacy = $(form).find("select[name='proj-privacy']").val();
-  var user = localStorage.getItem('currentUser');
-  Project.updatePostParams(name, description, date, privacy, user, projectId);
+  var name = $(form).find("input[name='task-name']").val();
+  var date = $(form).find("input[name='task-date']").val();
+  var status = $(form).find("select[name='task-status']").val();
+  var priority = $(form).find("select[name='task-priority']").val();
+  var order = $(form).find("input[name='task-order']").val();
+  var privacy = $(form).find("select[name='task-privacy']").val();
+  Task.updateTaskParams(name, date, status, order, privacy, taskId);
 };
 
-Task.updatePostParams = function(name, description, date, privacy, user, projectId){
+Task.updateTaskParams = function(name, date, status, priority, order, privacy, taskId){
   $.ajax({
-    url: App.url + '/projects/' + projectId,
+    url: App.url + '/tasks/' + taskId,
     type: 'PATCH',
     data: {
-      project: {
+      task: {
         name: name,
-        description: description,
         due_date: date,
+        status: status,
+        priority: priority,
+        order: order,
         privacy: privacy
       },
     },
     complete: function(jqXHR,textStatus){
-      trace(jqXHR, textStatus, "complete post!!");
+      trace(jqXHR, textStatus, "complete task!!");
     },
     success: function(data, textStatus, jqXHR){
       router.navigate("projects",{trigger: true});
-      trace(data,textStatus, jqXHR, "successful post!!");
+      trace(data,textStatus, jqXHR, "successful task!!");
     },
     error: function(jqXHR,error,exception){
       trace(jqXHR,error,exception);
     },
   }).done(function(response){
-    trace(response, "posted project!!");
+    trace(response, "posted task!!");
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
@@ -333,6 +357,24 @@ Task.updatePostParams = function(name, description, date, privacy, user, project
     trace(response);
   });
 };
+
+Task.deleteTask = function(){
+  $('#container').empty();
+  $('.jumbotron').hide();
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var taskId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/tasks/' + taskId,
+    type: 'DELETE',
+  }).done(function(data){
+    trace(data);
+    trace('deleted project');
+    window.location.href = '/#/projects';
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  });
+}
 
 Comment.newComment = function(){
   $('#container').empty().load('partials/comment-form.html',function(response,status,xhr){
@@ -396,6 +438,24 @@ Comment.showComments = function(taskId){
     trace(response);
   });
 };
+
+Comment.deleteComment = function(taskId){
+  $('#container').empty();
+  $('.jumbotron').hide();
+  // var locate = window.location.hash;
+  // var point = locate.lastIndexOf('/');
+  // var taskId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/tasks/' + taskId,
+    type: 'DELETE',
+  }).done(function(data){
+    trace(data);
+    trace('deleted project');
+    window.location.href = '/#/projects';
+  }).fail(function(jqXHR, textStatus, errorThrown){
+    trace(jqXHR, textStatus, errorThrown);
+  });
+}
 
 App.updateProject = function(){
     $('#container').empty().load('partials/project-form.html',function(response,status,xhr){

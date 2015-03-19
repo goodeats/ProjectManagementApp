@@ -155,9 +155,8 @@
               <form id="avatar" action="https://s3.amazonaws.com/project-management-bucket" method="post" enctype="multipart/form-data"></form>
             </div>
             <ul>
-              <li>{{user.title}}</li>
-              <li>{{user.email}}</li>
-              <li><a href="/#/users/{{id}}">You are viewing this user</a></li>
+              <li>Title: {{user.title}}</li>
+              <li>Email: {{user.email}}</li>
             </ul>
             {{#each user.tasks}}
               <p>{{name}} for: {{project}}</p>
@@ -188,6 +187,7 @@
               <li>Description: {{project.description}}</li>
               <li>Due Date: {{project.due_date}}</li>
               <li>Private? {{project.privacy}}</li>
+            <h4>Number of Tasks: {{project.tasks.length}}</h4>
             </ul>
             <h4>Tasks</h4>
             <ul>
@@ -225,6 +225,8 @@
 
         <script type="text/x-handlebars-template" id="taskTemplate">
           <button type='button' id='new-comment'>Add a Comment!</button>
+          <button type='button' id='update-task'>Update this Task!</button>
+          <button type='button' id='delete-task'>Delete this Task!</button>
           <div class="task">
             <h2>{{task.name}}</h2>
             <ul>
@@ -241,7 +243,7 @@
             <h3>Comments:</h3>
             <ul>
               {{#each task.comments}}
-                <li>{{body}}</li>
+                <li>{{body}} <button type='button' class='delete-comment'>Delete!</button></li>
               {{/each}}
             </ul>
           </div>
