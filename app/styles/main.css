@@ -4,18 +4,26 @@
   color: #000;
   padding: 0.2em 0;
 }
-
+.header {
+  background: rgba(255, 255, 255, 0.75);
+  padding: 10px;
+}
+.text-muted {
+  padding-left: 10px;
+  color: black;
+}
 /* Space out content a bit */
 body {
   padding-top: 20px;
   padding-bottom: 20px;
-  background: repeating-linear-gradient(
+  /*background: repeating-linear-gradient(
   to right,
   #fcdfae,
   #fcdfae 10px,
   #fce6c2 10px,
   #fce6c2 20px
-);
+);*/
+  background-image: url("https://s3.amazonaws.com/project-management-bucket/cork-background.jpg")
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -145,7 +153,7 @@ input {
 }
 
 .user h2 {
-  margin-left: 16%;
+  margin-left: 5%;
   padding: 2%;
 }
 
@@ -165,7 +173,7 @@ p, button, #avatar-change {
 
 .project ul {
   padding: 5px;
-  background-color: #eeeeee;
+  /*background-color: #eeeeee;*/
   list-style-type: none;
 }
 
@@ -181,6 +189,12 @@ p, button, #avatar-change {
 .newproject a {
   font-weight: bold;
   color: black;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px;
+}
+
+.newproject {
+  padding: 10px;
 }
 
 #project-form button {
