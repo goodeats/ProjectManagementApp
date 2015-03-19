@@ -223,8 +223,14 @@
               <li>Status: {{task.status}}</li>
               <li>Priority: {{task.priority}}</li>
               <li>Order: {{task.order}}</li>
-              <br>
-              <h3>Comments:</h3>
+            </ul>
+
+            <button type='button' id='task-file'>Add a file</button>
+            <form id="task-form">
+            </form>
+            <br>
+            <h3>Comments:</h3>
+            <ul>
               {{#each task.comments}}
                 <li>{{body}}</li>
               {{/each}}
