@@ -132,6 +132,11 @@ var Router = Backbone.Router.extend({
         trace('hi delete button is active');
       });
 
+      $('#show-members').on('click', function(){
+        App.showMembers(projectId);
+        trace('hi show members button is active');
+      });
+
       $('#new-task').on('click', function(){
         Task.newTask();
         trace('hi new task button is active <:o');
@@ -502,6 +507,29 @@ App.deleteProject = function(){
     trace(jqXHR, textStatus, errorThrown);
   });
 }
+
+App.showMembers = function(projectId){
+  trace('hello from the show members backbone');
+  var locate = window.location.hash;
+  var point = locate.lastIndexOf('/');
+  var projectId = parseInt(locate.substring(point+1, locate.length));
+  $.ajax({
+    url: App.url + '/#/project_memberships/' + projectId,
+    type: 'GET',
+  }).done(function(response){
+    trace(response, "showed members!!");
+    debugger
+    var template = Handlebars.compile($('#membershipTemplate').html());
+      $('#container').html(template({
+        user: response.users
+      }));
+  }).fail(function(jqXHR, textStatus, thrownError){
+    trace(jqXHR, textStatus, thrownError);
+    trace('wat');
+  }).always(function(response){
+    trace(response);
+  });
+};
 
 var router = new Router();
 Backbone.history.start();
