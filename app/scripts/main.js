@@ -233,10 +233,11 @@ Task.newTask = function(){
 
 Task.newTaskForm = function(e,form,router){
   if(e.preventDefault) e.preventDefault();
+  debugger;
   var name = $(form).find("input[name='task-name']").val();
   var date = $(form).find("input[name='task-date']").val();
-  var status = $(form).find("input[name='task-status']").val();
-  var order = $(form).find("select[name='task-order']").val();
+  var status = $(form).find("select[name='task-status']").val();
+  var order = $(form).find("input[name='task-order']").val();
   var privacy = $(form).find("select[name='task-privacy']").val();
   Task.newTaskParams(name, date, status, order, privacy, router);
 };

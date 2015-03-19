@@ -189,8 +189,9 @@
               <li>Due Date: {{project.due_date}}</li>
               <li>Private? {{project.privacy}}</li>
             </ul>
+            <h4>Completed tasks</h4>
             {{#each project.tasks}}
-              <p><a href="/#/tasks/{{id}}">{{name}} - assigned to: {{user.username}}</a></p>
+              <p><a href="/#/tasks/{{id}}">{{name}}</a> - assigned to: {{user.username}} - Status: {{status}}</p>
             {{/each}}
             {{#each project.user}}
               <p>{{username}} works here</p>
