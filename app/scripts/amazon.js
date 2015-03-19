@@ -5,6 +5,8 @@
 var myAws;
 var fileName;
 
+var App = App || {};
+
 App.getAmazonKey = function(){
   var apiURL = 'https://project-management-api.herokuapp.com'
 
