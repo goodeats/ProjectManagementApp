@@ -255,13 +255,14 @@ Task.newTaskForm = function(e,form,router){
   if(e.preventDefault) e.preventDefault();
   var name = $(form).find("input[name='task-name']").val();
   var date = $(form).find("input[name='task-date']").val();
-  var status = $(form).find("input[name='task-status']").val();
-  var order = $(form).find("select[name='task-order']").val();
+  var status = $(form).find("select[name='task-status']").val();
+  var priority = $(form).find("select[name='task-priority']").val();
+  var order = $(form).find("input[name='task-order']").val();
   var privacy = $(form).find("select[name='task-privacy']").val();
-  Task.newTaskParams(name, date, status, order, privacy, router);
+  Task.newTaskParams(name, date, status, priority, order, privacy, router);
 };
 
-Task.newTaskParams = function(name, date, status, order, privacy, router){
+Task.newTaskParams = function(name, date, status, priority, order, privacy, router){
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var projectId = parseInt(locate.substring(point+1, locate.length));
@@ -273,6 +274,7 @@ Task.newTaskParams = function(name, date, status, order, privacy, router){
         name: name,
         due_date: date,
         status: status,
+        priority: priority,
         order: order,
         privacy: privacy
       },
@@ -314,12 +316,13 @@ Task.updateTaskForm = function(e,form){
   var name = $(form).find("input[name='task-name']").val();
   var date = $(form).find("input[name='task-date']").val();
   var status = $(form).find("select[name='task-status']").val();
-  var order = $(form).find("select[name='task-order']").val();
+  var priority = $(form).find("select[name='task-priority']").val();
+  var order = $(form).find("input[name='task-order']").val();
   var privacy = $(form).find("select[name='task-privacy']").val();
   Task.updateTaskParams(name, date, status, order, privacy, taskId);
 };
 
-Task.updateTaskParams = function(name, date, status, order, privacy, taskId){
+Task.updateTaskParams = function(name, date, status, priority, order, privacy, taskId){
   $.ajax({
     url: App.url + '/tasks/' + taskId,
     type: 'PATCH',
@@ -328,6 +331,7 @@ Task.updateTaskParams = function(name, date, status, order, privacy, taskId){
         name: name,
         due_date: date,
         status: status,
+        priority: priority,
         order: order,
         privacy: privacy
       },
