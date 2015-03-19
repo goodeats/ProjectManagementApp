@@ -193,6 +193,16 @@
           <div class="project-buttons">
             <button type='button' id='update-project'>Update this Project!</button>
             <button type='button' id='delete-project'>Delete this Project!</button>
+            <button type='button' id='show-members'>Show Members!</button>
+          </div>
+        </script>
+        <script type="text/x-handlebars-template" id="membershipTemplate">
+          <div id="membership">
+          {{#each user}}
+            <ul>
+            <li>{{username}}</li>
+            </ul>
+          {{/each}}
           </div>
         </script>
 
