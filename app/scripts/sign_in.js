@@ -9,10 +9,8 @@ var UserApp = (function() {
 
   var run = function() {
     authToken = localStorage.getItem('authToken');
-    // apiHost = 'http://localhost:3000';
     apiHost = 'https://project-management-api.herokuapp.com';
     setupAjaxRequests();
-
     $('#sign-in-form').on('submit', submitLogin);
     $('#sign-up-form').on('submit', submitRegistration);
     $('#signout').on('click', signOut);
@@ -27,19 +25,16 @@ var UserApp = (function() {
     })
     .done(function(results){
       loginSuccess(results);
-      console.log(results);
     })
     .fail(function(err) {
       console.log(err);
     });
-
     return false;
   };
 
   var loginSuccess = function(userData) {
     localStorage.setItem('authToken', userData.token);
     localStorage.setItem('currentUser', userData.id);
-    // console.log('logged in!');
     $.ajax({
       url: App.url + '/users/' + userData.id,
       type: 'GET'
@@ -49,7 +44,6 @@ var UserApp = (function() {
         user: response
       }));
       $( 'button#avatar-change' ).click(function () {
-        console.log('i am clicking on the button');
         if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
           $( "div#avatar-form" ).slideDown( "slow" );
           App.getAmazonKey();
@@ -62,7 +56,6 @@ var UserApp = (function() {
     }).always(function(response){
       trace(response);
     });
-    // i think what you're trying to do here is make a GET request to your api for the user's information
     window.location.href = '/#/users/' + userData.id;
   };
 
@@ -79,7 +72,6 @@ var UserApp = (function() {
     .fail(function(err) {
       console.log(err);
     });
-
     return false;
   };
 
@@ -101,16 +93,15 @@ var UserApp = (function() {
     event.preventDefault();
     localStorage.removeItem('authToken');
     authToken = undefined;
-    console.log('User has been signed out');
     location.reload();
     window.location.href = '/';
   };
-
   return {run: run};
 })();
 
 var SignUp = function(){
   $( 'button#sign-up' ).click(function () {
+    $( "div#sign-in-form-slide" ).hide();
     if ( $( 'div#form-slide' ).is( ':hidden' ) ) {
       $( 'div#form-slide' ).slideDown( 'slow' );
     } else {
@@ -121,6 +112,7 @@ var SignUp = function(){
 
 var SignIn = function(){
 $( 'button#sign-in' ).click(function () {
+  $( 'div#form-slide' ).hide();
     if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
       $( "div#sign-in-form-slide" ).slideDown( "slow" );
     } else {
@@ -130,7 +122,6 @@ $( 'button#sign-in' ).click(function () {
 };
 
 $(document).ready(function() {
-  console.log('allo from the sign in js!');
   UserApp.run();
   $( "div#form-slide" ).hide();
   $( "div#sign-in-form-slide").hide();
