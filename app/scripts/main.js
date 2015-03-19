@@ -370,7 +370,7 @@ Task.deleteTask = function(){
   }).done(function(data){
     trace(data);
     trace('deleted project');
-    window.location.href = '/#/projects';
+    window.location.href = '/ProjectManagementApp/#/projects';
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   });
@@ -448,7 +448,7 @@ Comment.deleteComment = function(taskId){
   }).done(function(data){
     trace(data);
     trace('deleted project');
-    window.location.href = '/#/projects';
+    window.location.href = '/ProjectManagementApp/#/projects';
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(jqXHR, textStatus, errorThrown);
   });
@@ -519,7 +519,7 @@ App.deleteProject = function(){
     type: 'DELETE',
   }).done(function(data){
     trace(data);
-    window.location.href = '/#/projects';
+    window.location.href = '/ProjectManagementApp/#/projects';
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(App.url + '/#/projects/' + projectId);
     trace(jqXHR, textStatus, errorThrown);
