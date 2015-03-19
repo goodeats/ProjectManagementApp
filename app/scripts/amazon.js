@@ -4,12 +4,9 @@
 'use strict';
 var myAws;
 var fileName;
-// var App = {};
 
 App.getAmazonKey = function(){
-  console.log('im in the getamazonkey function');
   var apiURL = 'https://project-management-api.herokuapp.com'
-  // var apiURL = 'http://localhost:3000'
 
   $.ajax({
     url: apiURL + '/amazon/sign_key/image%2Fjpeg'
@@ -18,13 +15,10 @@ App.getAmazonKey = function(){
     App.buildFormData(data);
     App.sendImageToRails(data.key);
   });
-
 };
 
 App.buildFormData = function(myAws){
-  console.log('im in the buildformdata function');
   fileName = myAws.key;
-  console.log("I'm in the build form data section " + myAws.key);
   $('form#avatar').append('<input type="hidden" name="key" value="' + myAws.key + '">')
   $('form#avatar').append('<input type="hidden" name="AWSAccessKeyId" value="' + myAws.access_key + '">')
   $('form#avatar').append('<input type="hidden" name="policy" value="' + myAws.policy + '">')
@@ -36,32 +30,19 @@ App.buildFormData = function(myAws){
 }
 
 App.sendImageToRails = function(fileName){
-    var $form = $('form#avatar');
+  var $form = $('form#avatar');
   $('body').on('submit',$form, function(e,$form){
       App.postImageToRails(fileName);
       $($form).submit();
     });
   };
 
-App.avatarSuccess = function(response) {
-    // debugger;
-    // localStorage.setItem('authToken', userData.token);
-    console.log('avatar changes!');
-    // window.location.href = '/#/users/' + response.user.id;
-    window.location.reload(true);
-  };
-
 App.postImageToRails = function(fileName){
-  // var user_id = 5;
-  // var title = "something else";
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var userId = parseInt(locate.substring(point+1, locate.length));
-  // debugger;
-  console.log("im inside the postimage to rails and my file name is " + fileName);
   $.ajax({
-    // url: 'http://localhost:3000/users/' + userId,
-    url: 'https://project-management-api.herokuapp.com/users' + userId,
+    url: 'https://project-management-api.herokuapp.com/users/' + userId,
     type: 'PATCH',
     data: {
       user: {
@@ -69,8 +50,6 @@ App.postImageToRails = function(fileName){
       }
     }
   }).done(function(response){
-      // debugger;
-      console.log(response);
       App.avatarSuccess(response);
     }).fail(function(jqXHR, textStatus, errorThrow){
       console.log(jqXHR, textStatus, errorThrow);
@@ -80,12 +59,17 @@ App.postImageToRails = function(fileName){
 };
 
 
-// $(document).ready(function(){
-//   App.getAmazonKey();
-//   $( "div#form-slide" ).hide();
+App.avatarSuccess = function(response) {
+    console.log('avatar changes!');
+    // window.location.reload(true);
+  };
 
-//   $('#avatar-change').on('click', function(){
+///////////////////// The following code is for file upload
 
-//   });
-//   console.log('I have an amazon key');
-// });
+$('button#task-file').on('click', function(){
+  console.log('im in the task file');
+  // $('task-form').append('<input type="file" id="file">');
+  // $('task-form').append('<input id="task-form-submit" type="submit" value="Upload File">');
+  // var selectedFile = document.getElementById('#file');
+  // console.log('selected file is ' + selectedFile);
+});
