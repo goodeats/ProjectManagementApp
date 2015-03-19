@@ -175,6 +175,7 @@
         </script>
 
         <script type="text/x-handlebars-template" id="projectTemplate">
+          <button type='button' id='new-task'>Add a Task!</button>
           <div class="project">
             <h2>{{project.name}}</h2>
             <ul>
@@ -190,7 +191,7 @@
             {{/each}}
           </div>
           <div class="project-buttons">
-            <a href="#/projects/{{id}}">Update this Project!</a>
+            <button type='button' id='update-project'>Update this Project!</button>
             <button type='button' id='delete-project'>Delete this Project!</button>
           </div>
         </script>
@@ -204,6 +205,7 @@
 
 
         <script type="text/x-handlebars-template" id="taskTemplate">
+          <button type='button' id='new-comment'>Add a Comment!</button>
           <div class="task">
             <h2>{{task.name}}</h2>
             <ul>
@@ -211,6 +213,11 @@
               <li>Status: {{task.status}}</li>
               <li>Priority: {{task.priority}}</li>
               <li>Order: {{task.order}}</li>
+              <br>
+              <h3>Comments:</h3>
+              {{#each task.comments}}
+                <li>{{body}}</li>
+              {{/each}}
             </ul>
           </div>
         </script>
