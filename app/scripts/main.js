@@ -442,9 +442,6 @@ Comment.showComments = function(taskId){
 Comment.deleteComment = function(taskId){
   $('#container').empty();
   $('.jumbotron').hide();
-  // var locate = window.location.hash;
-  // var point = locate.lastIndexOf('/');
-  // var taskId = parseInt(locate.substring(point+1, locate.length));
   $.ajax({
     url: App.url + '/tasks/' + taskId,
     type: 'DELETE',
