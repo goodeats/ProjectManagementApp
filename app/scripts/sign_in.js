@@ -56,7 +56,7 @@ var UserApp = (function() {
     }).always(function(response){
       trace(response);
     });
-    window.location.href = '/#/users/' + userData.id;
+     window.location.href = '/ProjectManagementApp/#/users/' + userData.id;
   };
 
   var submitLogin = function(event) {
@@ -85,7 +85,7 @@ var UserApp = (function() {
   var acceptFailure = function(error) {
     if (error.status === 401) {
       console.log('SEND TO LOGIN SCREEN');
-      window.location.href = '/';
+      window.location.href = '/ProjectManagementApp/index.html';
     }
   };
 
@@ -94,7 +94,7 @@ var UserApp = (function() {
     localStorage.removeItem('authToken');
     authToken = undefined;
     location.reload();
-    window.location.href = '/';
+     window.location.href = '/ProjectManagementApp/index.html';
   };
   return {run: run};
 })();
