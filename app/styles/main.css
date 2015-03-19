@@ -9,6 +9,13 @@
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background: repeating-linear-gradient(
+  to right,
+  #fcdfae,
+  #fcdfae 10px,
+  #fce6c2 10px,
+  #fce6c2 20px
+);
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -123,4 +130,78 @@ label {
 input {
   width: 200px;
   border: 1px solid #000;
+}
+
+.user {
+  margin-left: 34%;
+}
+
+.user-container {
+  background-color: #eeeeee;
+  margin-left: 20%;
+  margin-right: 15%;
+  height: 350px;
+  border: #428bca solid 3px;
+}
+
+.user h2 {
+  margin-left: 16%;
+  padding: 2%;
+}
+
+p, button, #avatar-change {
+  margin-left: 0.85%;
+  padding: 7px;
+}
+
+.user img {
+  border: #428bca solid 3px;
+}
+
+.project {
+  height: 250px;
+
+}
+
+.project ul {
+  padding: 5px;
+  background-color: #eeeeee;
+  list-style-type: none;
+}
+
+.project .project-background {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+}
+
+.project ul span {
+  font-weight: bold;
+}
+
+.newproject a {
+  font-weight: bold;
+  color: black;
+}
+
+#project-form button {
+  margin-left: 19%;
+  padding: 5px;
+}
+
+.row-same-height {
+  display: table;
+}
+
+#tim {
+  width: 75%;
+  margin: 10px;
+}
+
+.col-lg-height {
+  display: table-cell;
+  float: left;
+}
+
+.col-top {
+  vertical-align: top;
 }
