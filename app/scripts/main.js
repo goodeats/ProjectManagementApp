@@ -9,7 +9,6 @@ var trace = function(){
 };
 
 var App = App || {
-  // url: 'http://localhost:3000'
   url: 'https://project-management-api.herokuapp.com'
 };
 var Project = Project || {};
@@ -34,15 +33,12 @@ var Router = Backbone.Router.extend({
   },
 
   users: function(){
-    trace('hello from the users backbone!');
     $('#container').empty();
     $('.jumbotron').hide();
     $.ajax({
       url: App.url + '/users',
       type: 'GET'
     }).done(function(response){
-      // $('.container').empty();
-
       var template = Handlebars.compile($('#usersTemplate').html());
       $('#container').html(template({
         users: response.users
@@ -71,7 +67,6 @@ var Router = Backbone.Router.extend({
         user: response.user
       }));
       $( 'button#avatar-change' ).click(function () {
-        console.log('i am clicking on the button');
         if ( $( "div#sign-in-form-slide" ).is( ":hidden" ) ) {
           $( "div#avatar-form" ).slideDown( "slow" );
           App.getAmazonKey();
@@ -87,7 +82,6 @@ var Router = Backbone.Router.extend({
   },
 
   projects: function(){
-    trace('hello from the projects backbone!');
     $('#container').empty();
     $('.jumbotron').hide();
 
@@ -107,7 +101,6 @@ var Router = Backbone.Router.extend({
   },
 
   project: function(id){
-    trace('hello from the project backbone!');
     $('#container').empty();
     $('.jumbotron').hide();
     var locate = window.location.hash;
@@ -124,22 +117,18 @@ var Router = Backbone.Router.extend({
 
       $('#update-project').on('click', function(){
         App.updateProject();
-        trace('hi update button is active');
       });
 
       $('#delete-project').on('click', function(){
         App.deleteProject();
-        trace('hi delete button is active');
       });
 
       $('#show-members').on('click', function(){
         App.showMembers(projectId);
-        trace('hi show members button is active');
       });
 
       $('#new-task').on('click', function(){
         Task.newTask();
-        trace('hi new task button is active <:o');
       });
 
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -150,7 +139,6 @@ var Router = Backbone.Router.extend({
   },
 
   newProject: function(){
-    trace('hello from the new project backbone');
     $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
       var $form = $('#project-form');
       $form.on('submit',function(event){
@@ -160,7 +148,6 @@ var Router = Backbone.Router.extend({
   },
 
   task: function(id){
-    trace('hello from the task backbone!');
     $('#container').empty();
     $('.jumbotron').hide();
     var locate = window.location.hash;
@@ -177,12 +164,10 @@ var Router = Backbone.Router.extend({
 
       $('#new-comment').on('click', function(){
         Comment.newComment();
-        trace('hi new comment button is active <:o');
       });
 
       $('#show-comment').on('click', function(){
         Comment.showComments(taskId);
-        trace('hi show comment button is active <:o');
       });
 
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -196,7 +181,6 @@ var Router = Backbone.Router.extend({
 });
 
 Project.newProcessForm = function(e,form,router){
-  trace('hello from the project new form');
   if(e.preventDefault) e.preventDefault();
   var name = $(form).find("input[name='proj-name']").val();
   var description = $(form).find("input[name='proj-description']").val();
@@ -215,8 +199,7 @@ Project.newPostParams = function(name, description, date, privacy, user, router)
         name: name,
         description: description,
         due_date: date,
-        privacy: privacy,
-        // user: user
+        privacy: privacy
       },
     },
     complete: function(jqXHR,textStatus){
@@ -234,14 +217,12 @@ Project.newPostParams = function(name, description, date, privacy, user, router)
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 Task.newTask = function(){
-  trace('hello from the new task backbone');
   $('#container').empty().load('partials/task-form.html',function(response,status,xhr){
     var $form = $('#task-form');
     $form.on('submit',function(event){
@@ -251,7 +232,6 @@ Task.newTask = function(){
 };
 
 Task.newTaskForm = function(e,form,router){
-  trace('hello from the new task form');
   if(e.preventDefault) e.preventDefault();
   var name = $(form).find("input[name='task-name']").val();
   var date = $(form).find("input[name='task-date']").val();
@@ -274,7 +254,7 @@ Task.newTaskParams = function(name, date, status, order, privacy, router){
         due_date: date,
         status: status,
         order: order,
-        privacy: privacy,
+        privacy: privacy
       },
     },
     complete: function(jqXHR,textStatus){
@@ -292,14 +272,12 @@ Task.newTaskParams = function(name, date, status, order, privacy, router){
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 Task.updateTask = function(){
-  trace('hello from the update project backbone');
     $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
       var $form = $('#project-form');
       $form.on('submit',function(event){
@@ -309,7 +287,6 @@ Task.updateTask = function(){
 };
 
 Task.updateProcessForm = function(e,form){
-  trace('hello from the project update form');
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var projectId = parseInt(locate.substring(point+1, locate.length));
@@ -349,14 +326,12 @@ Task.updatePostParams = function(name, description, date, privacy, user, project
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 Comment.newComment = function(){
-  trace('hello from the new comment backbone');
   $('#container').empty().load('partials/comment-form.html',function(response,status,xhr){
     var $form = $('#comment-form');
     $form.on('submit',function(event){
@@ -366,7 +341,6 @@ Comment.newComment = function(){
 };
 
 Comment.newCommentForm = function(e,form,router){
-  trace('hello from the new comment form');
   if(e.preventDefault) e.preventDefault();
   var body = $(form).find("input[name='comment-body']").val();
   Comment.newCommentParams(body, router);
@@ -377,7 +351,6 @@ Comment.newCommentParams = function(body, router){
   var point = locate.lastIndexOf('/');
   var taskId = parseInt(locate.substring(point+1, locate.length));
   var user = parseInt(localStorage.getItem('currentUser'));
-  debugger
   $.ajax({
     url: App.url + '/tasks/' + taskId + '/comments',
     type: 'POST',
@@ -402,37 +375,26 @@ Comment.newCommentParams = function(body, router){
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 Comment.showComments = function(taskId){
-  trace('hello from the show comments backbone');
   $.ajax({
     url: App.url + '/tasks/' + taskId + '/comments',
     type: 'GET',
   }).done(function(response){
     trace(response, "showed comment!!");
-
-    // debugger
-    // $('#commentsList').append('User: ' + response.comments);
-    // // $('#commentsList').append('User: ' + response.user.username);
-
-
-
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 App.updateProject = function(){
-  trace('hello from the update project backbone');
     $('#container').empty().load('partials/project-form.html',function(response,status,xhr){
       var $form = $('#project-form');
       $form.on('submit',function(event){
@@ -442,7 +404,6 @@ App.updateProject = function(){
 };
 
 Project.updateProcessForm = function(e,form){
-  trace('hello from the project update form');
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var projectId = parseInt(locate.substring(point+1, locate.length));
@@ -482,14 +443,12 @@ Project.updatePostParams = function(name, description, date, privacy, user, proj
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
     router.navigate("projects",{trigger: true});
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
 };
 
 App.deleteProject = function(){
-  trace('hello from the delete project backbone');
   $('#container').empty();
   $('.jumbotron').hide();
   var locate = window.location.hash;
@@ -500,7 +459,6 @@ App.deleteProject = function(){
     type: 'DELETE',
   }).done(function(data){
     trace(data);
-    trace('deleted project');
     window.location.href = '/#/projects';
   }).fail(function(jqXHR, textStatus, errorThrown){
     trace(App.url + '/#/projects/' + projectId);
@@ -509,7 +467,6 @@ App.deleteProject = function(){
 }
 
 App.showMembers = function(projectId){
-  trace('hello from the show members backbone');
   var locate = window.location.hash;
   var point = locate.lastIndexOf('/');
   var projectId = parseInt(locate.substring(point+1, locate.length));
@@ -518,14 +475,12 @@ App.showMembers = function(projectId){
     type: 'GET',
   }).done(function(response){
     trace(response, "showed members!!");
-    debugger
     var template = Handlebars.compile($('#membershipTemplate').html());
       $('#container').html(template({
         user: response.users
       }));
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
-    trace('wat');
   }).always(function(response){
     trace(response);
   });
@@ -535,7 +490,5 @@ var router = new Router();
 Backbone.history.start();
 
 $(document).ready(function(){
-  trace('\'allo from the main js!');
   $( "div#avatar-change" ).hide();
-
 });

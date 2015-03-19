@@ -90,6 +90,12 @@ body {
 
 #sign-in-submit{
   text-align: center;
+  margin-left: 25%;
+}
+
+#sign-up-submit{
+  text-align: center;
+  margin-left: 25%;
 }
 
 #sign-up-form {
