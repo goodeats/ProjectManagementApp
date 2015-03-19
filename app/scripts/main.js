@@ -110,6 +110,8 @@ var Router = Backbone.Router.extend({
       url: App.url + '/projects/' + projectId,
       type: 'GET'
     }).done(function(response){
+      console.log("I'm getting the project params back here");
+      console.log(response);
       var template = Handlebars.compile($('#projectTemplate').html());
       $('#container').html(template({
         project: response.project
@@ -537,9 +539,9 @@ App.showMembers = function(projectId){
   }).done(function(response){
     trace(response, "showed members!!");
     var template = Handlebars.compile($('#membershipTemplate').html());
-      $('#container').html(template({
-        user: response.users
-      }));
+    response.users.map(function(user){
+      $('#membership2').append(template(user));
+    })
   }).fail(function(jqXHR, textStatus, thrownError){
     trace(jqXHR, textStatus, thrownError);
   }).always(function(response){
